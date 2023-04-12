@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # [TODO]: step 1
 # Update the is_log_line function below to skip lines that are not valid log lines.
 # Valid log lines have a timestamp, error type, and message. For example, lines 1, 3,
@@ -9,7 +11,23 @@ def is_log_line(line):
     """Takes a log line and returns True if it is a valid log line and returns nothing
     if it is not.
     """
-    pass
+    valid_error_types = ['INFO', 'TRACE', 'WARNING']
+    try:
+        error_info = line.split()
+
+        timestamp_str = ' '.join(error_info[:2])
+        timestamp = datetime.strptime(timestamp_str, '%d/%m/%y %H:%M:%S')
+
+        error_type = error_info[2]
+        if error_type not in valid_error_types:
+            raise ValueError
+        
+        error_message = ' '.join(error_info[3:])
+        if not error_message or error_message[0] != ':':
+            raise ValueError
+    except:
+        return False
+    return True
 
 # [TODO]: step 2
 # Update the get_dict function below so it converts a line of the logs into a
@@ -20,7 +38,18 @@ def get_dict(line):
     """Takes a log line and returns a dict with
     `timestamp`, `log_level`, `message` keys
     """
-    pass
+    result = {}
+    error_info = line.split()
+
+    #timestamp = datetime.strptime(' '.join(error_info[:2]), '%d/%m/%y %H:%M:%S')
+    timestamp = ' '.join(error_info[:2])
+    error_type = error_info[2]
+    error_message = ' '.join(error_info[3:])
+    
+    result["timestamp"] = timestamp
+    result["log_level"] = error_type
+    result["message"] = error_message
+    return result
 
 
 # YOU DON'T NEED TO CHANGE ANYTHING BELOW THIS LINE
