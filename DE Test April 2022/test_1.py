@@ -9,8 +9,7 @@ def is_log_line(line):
     """Takes a log line and returns True if it is a valid log line and returns nothing
     if it is not.
     """
-    return True
-
+    pass
 
 # [TODO]: step 2
 # Update the get_dict function below so it converts a line of the logs into a
